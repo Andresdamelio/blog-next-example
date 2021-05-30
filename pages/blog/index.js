@@ -1,23 +1,38 @@
-import Head from 'next/head'
-import Link from 'next/link';
+import Head from 'next/head';
+import Layout from '../../components/layout';
+import utilStyles from '../../styles/utils.module.css';
+import { getSortedPostsData } from '../../lib/posts';
 
-const Blog = () => {
+const Blog = ({ posts }) => {
   return (
-    <>
+    <Layout>
       <Head>
-        <title>Blog</title>
+        <title>My posts</title>
       </Head>
-      <h1>Bienvenido a mi blog</h1>
-
-      <h4>
-        <Link href='/blog/first-post'>Mi primer post</Link>
-      </h4>
-
-      <h4>
-        <Link href='/'>Volver al inicio</Link>
-      </h4>
-    </>
+      <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
+        <h2 className={utilStyles.headingLg}>Blog</h2>
+        <ul className={utilStyles.list}>
+          {posts.map(({ id, date, title }) => (
+            <li className={utilStyles.listItem} key={id}>
+              {title}
+              <br />
+              {id}
+              <br />
+              {date}
+            </li>
+          ))}
+        </ul>
+      </section>
+    </Layout>
   );
 };
+
+export const getStaticProps = async () => {
+  const allPosts = await getSortedPostsData();
+
+  return {
+    props: { posts: allPosts }
+  };
+}
 
 export default Blog;
