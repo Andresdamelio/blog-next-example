@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Link from 'next/link';
 import Date from '../../components/date';
 import Layout from '../../components/layout';
 import utilStyles from '../../styles/utils.module.css';
@@ -18,6 +19,11 @@ const Post = ({ postData }) => {
         </div>
         <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
       </article>
+      <div>
+        <Link href='/blog'>
+          <a>← Volver al blog</a>
+        </Link>
+      </div>
     </Layout>
   );
 };
